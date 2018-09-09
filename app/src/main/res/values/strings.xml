@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">GettyImagesGallery</string>
+    <string name="error">Error</string>
+    <string name="transition_name">transition_%d</string>
+</resources>
