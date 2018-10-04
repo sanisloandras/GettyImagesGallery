@@ -1,18 +1,24 @@
 package com.sanislo.soft.gettyimagesgallery.presentation
 
+import android.content.Context
+import android.graphics.Bitmap
 import android.support.v7.recyclerview.extensions.AsyncDifferConfig
 import android.support.v7.recyclerview.extensions.ListAdapter
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
+import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.Transformation
+import com.bumptech.glide.load.engine.Resource
 import com.bumptech.glide.request.RequestOptions
 import com.sanislo.soft.gettyimagesgallery.R
 import com.sanislo.soft.gettyimagesgallery.domain.ImageModel
+import java.security.MessageDigest
 
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
@@ -45,7 +51,8 @@ class ImageAdapter(val clickHandler: ClickHandler) : ListAdapter<ImageModel, Ima
         fun bind() {
             val (_, _, url) = getItem(adapterPosition)
             iv.transitionName = url
-            val requestOptions = RequestOptions.placeholderOf(R.drawable.placeholder)
+            val requestOptions = RequestOptions
+                    .placeholderOf(R.drawable.placeholder)
                     .dontTransform()
             Glide.with(itemView.context)
                     .load(url)
@@ -55,6 +62,7 @@ class ImageAdapter(val clickHandler: ClickHandler) : ListAdapter<ImageModel, Ima
     }
 
     companion object {
+        val TAG = ImageAdapter::class.java
         val asyncDiffConfig = AsyncDifferConfig.Builder(object : DiffUtil.ItemCallback<ImageModel>() {
             override fun areItemsTheSame(imageModel: ImageModel, t1: ImageModel): Boolean {
                 return imageModel.id == t1.id
